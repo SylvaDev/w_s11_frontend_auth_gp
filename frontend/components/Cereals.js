@@ -1,11 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export default function Cereals() {
   const [cereals, setCereals] = useState([])
+  const navigate = useNavigate()
 
   const logout = () => {
-
+    localStorage.removeItem('token')
+    navigate('/')
   }
+
+  useEffect(() => {
+    const token = localStorage. getItem('token')
+    if (!token) {
+      navigate('/')
+    }
+  }, [])
 
   return (
     <div className="container">
