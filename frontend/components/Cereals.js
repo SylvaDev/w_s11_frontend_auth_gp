@@ -15,6 +15,19 @@ export default function Cereals() {
     const token = localStorage. getItem('token')
     if (!token) {
       navigate('/')
+    } else {
+      const fetchCereals = async () => {
+        try {
+          const response = await axios.get(
+            'api/cereals',
+            { headers: {Authorization: token }}
+          )
+          setCereals(response.data)
+        } catch (error) {
+          if (error?.response?.status == 401) logout()
+        }
+      }
+      fetchCereals()
     }
   }, [])
 
